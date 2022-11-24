@@ -22,7 +22,6 @@ public class Task2{
 		for(int i=0; i<5; i++){
 			Scanner in = new Scanner(System.in);
 			String inLine = in.nextLine();
-			System.out.println(inLine);
 			char c = inLine.charAt(0);
 			float f = getNumber(inLine);
 			characterMap.put(c, f);
