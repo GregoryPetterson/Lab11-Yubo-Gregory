@@ -55,7 +55,10 @@ class HFNode implements Comparable<HFNode> {
 	public int compareTo(HFNode o) {
 		if (this.frequence == o.frequence) {
 			return this.getCharacter() - o.getCharacter();
+		} else if (this.frequence > o.frequence) {
+			return 1;
+		} else{
+			return -1;
 		}
-		return 1;
 	}
 }

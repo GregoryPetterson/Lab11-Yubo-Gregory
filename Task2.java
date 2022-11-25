@@ -17,9 +17,13 @@ public class Task2{
 	}
 
     public static void main(String[] args) {
-        System.out.println("how many alphabet:");
+        System.out.println("please input the total number of your alphabet:");
+		Scanner num = new Scanner(System.in);
+		String x = num.next();
+		int y = Integer.parseInt(x);
+		System.out.println("please input your alphabet with frequency");
 		Map<Character, Float> characterMap = new HashMap<>();
-		for(int i=0; i<5; i++){
+		for(int i = 0; i<y; i++){
 			Scanner in = new Scanner(System.in);
 			String inLine = in.nextLine();
 			char c = inLine.charAt(0);
@@ -82,9 +86,7 @@ public class Task2{
 		}
 
         //Output
-		for(Map.Entry<Character,Float> e:characterMap.entrySet()){
-            System.out.println(e.getKey()+" "+e.getValue());
-        }
+		System.out.println("The result is:");
 		for(Map.Entry<Character,String> e:dict.entrySet()){
             System.out.println(e.getKey()+" "+e.getValue());
         }
