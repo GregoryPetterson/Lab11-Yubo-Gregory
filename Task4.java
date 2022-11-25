@@ -78,10 +78,10 @@ public class Task4 {
 		for(Map.Entry<Character,Integer> e:characterMap.entrySet()){
             System.out.println(e.getKey()+" "+e.getValue());
         }
+		System.out.println("The result is:");
 		for(Map.Entry<Character,String> e:dict.entrySet()){
             System.out.println(e.getKey()+" "+e.getValue());
         }
-		System.out.println("The result is:");
 		for (int i = 0; i < chars.length; i++) {
 			string.append(dict.get(chars[i]));
 		}
