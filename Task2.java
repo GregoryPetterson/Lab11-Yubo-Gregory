@@ -62,7 +62,6 @@ public class Task2{
 			finalTree.getRight().setCode("1");
 		}
 
-
         Map<Character, String> dict = new HashMap<>();
  
 		while (!queue.isEmpty()) {
