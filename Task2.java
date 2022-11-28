@@ -1,7 +1,11 @@
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
+// Output is not in short-lex
 public class Task2{
 
 	public static float getNumber(String str){
@@ -15,28 +19,36 @@ public class Task2{
 		}
 	}
 
-    public static void main(String[] args) {
-        System.out.println("please input the total number of your alphabet:");
-		Scanner num = new Scanner(System.in);
-		String x = num.next();
-		int y = Integer.parseInt(x);
-		System.out.println("please input your alphabet with frequency");
+    public static void main(String[] args) throws FileNotFoundException{
+
+		if (args.length < 2) {
+			System.out.println("Please input the name of the file containing the alphabet frequencies and the output file name.");
+			System.exit(0);
+		}
+
+		String inputfilename = args[0];
+		String outputfilename = args[1];
+
 		Map<Character, Float> characterMap = new HashMap<>();
-		for(int i = 0; i<y; i++){
-			Scanner in = new Scanner(System.in);
+
+		Scanner in = new Scanner(new File(inputfilename)) ;
+
+		while (in.hasNext()) {
 			String inLine = in.nextLine();
 			char c = inLine.charAt(0);
 			float f = getNumber(inLine);
 			characterMap.put(c, f);
 		}
 
+		in.close();
+
     
         PriorityQueue<HFNode> pQueue = new PriorityQueue<>();
-        Set<Character> key = characterMap.keySet();
-        for (char c : key) {
+        Set<Character> keys = characterMap.keySet();
+        for (char key : keys) {
             HFNode hfNode = new HFNode();
-            hfNode.setCharacter(c);
-            hfNode.setFrequence(characterMap.get(c));
+            hfNode.setCharacter(key);
+            hfNode.setFrequence(characterMap.get(key));
             pQueue.add(hfNode);
         }
         
@@ -84,9 +96,12 @@ public class Task2{
 		}
 
         //Output
-		System.out.println("The result is:");
+		PrintWriter out = new PrintWriter(outputfilename);
 		for(Map.Entry<Character,String> e:dict.entrySet()){
-            System.out.println(e.getKey()+" "+e.getValue());
+            out.println(e.getKey()+" "+e.getValue());
         }
+		out.close();
+
+		
     }
 }
