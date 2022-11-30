@@ -1,0 +1,5 @@
+Please note: the directions for task 5 and 6 were difficult to understand.
+
+For text.txt the total number of 0s and 1s is 33 and the number of letters is 6, so the average length in practice is about 6. The avg. letter length
+of "a" is less than 1 because it has the highest frequence in englishinput.txt and relatively few letters. But for the letters with lower frequency it's higher
+comparatively.

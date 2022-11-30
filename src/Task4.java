@@ -1,8 +1,10 @@
 import java.util.*;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+
 
 public class Task4 {
 
@@ -15,9 +17,9 @@ public class Task4 {
 			System.exit(0);
 		}
 
-        String huffmanencoding = args[0];
+        String huffmanEncoding = args[0];
 		String  eORd = args[1];
-        String inputfilename = args[2];
+        String inputFileName = args[2];
 
         // Encoding or decoding?
         // Take the huffmanencoding file and turn it into hashmap so we can
@@ -25,9 +27,9 @@ public class Task4 {
         if(eORd.equals("e")){
 
         Map<Character, String> characterMap = new HashMap<>();
-		Scanner in = new Scanner(new File(huffmanencoding));
+		Scanner in = new Scanner(new File(huffmanEncoding));
 
-        File inputfile = new File(inputfilename);
+        File inputfile = new File(inputFileName);
 
 		while (in.hasNext()) {
 			String inLine = in.nextLine();
@@ -40,57 +42,85 @@ public class Task4 {
             encode(characterMap, inputfile);
         } else if( eORd.equals("d")){
 
-            Map<Character, String> codeMap = new HashMap<>();
-            Scanner in = new Scanner(new File(huffmanencoding));
+            Map<String, Character> codeMap = new HashMap<>();
+            Scanner in = new Scanner(new File(huffmanEncoding));
     
-            File inputfile = new File(inputfilename);
+            File inputFile = new File(inputFileName);
     
             while (in.hasNext()) {
                 String inLine = in.nextLine();
-                char key = inLine.charAt(0);
-                String code = inLine.substring(2);
-                codeMap.put(key, code);
+                char letter = inLine.charAt(0);
+                String keyCode = inLine.substring(2);
+                codeMap.put(keyCode, letter);
             }
             in.close();
-            
-            decode(codeMap, inputfile);
+            decode(codeMap, inputFile);
         }    
     }
 
-    public static void encode(Map<Character, String> huffmanmap, File inputfile) throws FileNotFoundException{
-        Scanner in = new Scanner(inputfile);
-        String filestring = "";
+    public static void encode(Map<Character, String> characterMap, File inputFile) throws FileNotFoundException{
+        Scanner in = new Scanner(inputFile);
+        String fileString = "";
         
 
         while (in.hasNext()) {
-			String inline = in.nextLine();
-            filestring = filestring + inline;
+			String inLine = in.nextLine();
+            fileString = fileString + inLine;
 		}
         in.close();
 
-        filestring = filestring.toLowerCase();
+        fileString = fileString.toLowerCase();
 
-        char[] filechararray = filestring.toCharArray();
-        int chararraylength = filechararray.length;
+        char[] fileCharArray = fileString.toCharArray();
+        int charArrayLength = fileCharArray.length;
 
-        PrintWriter outputfile = new PrintWriter(inputfile);
+        PrintWriter outputFile = new PrintWriter(inputFile);
 
-        for(int i=0; i<chararraylength; i++){
-        String value = String.valueOf(huffmanmap.get(filechararray[i]));
+        for(int i=0; i<charArrayLength; i++){
+        String value = String.valueOf(characterMap.get(fileCharArray[i]));
             
         if (value != "null") {
-            outputfile.print(value);
+            outputFile.print(value);
             
             } else {
-                outputfile.print("");
+                outputFile.print("");
             }
         }
-        outputfile.close();
+        outputFile.close();
     }
 
-    public static void decode(Map<Character, String> huffmanmap, File inputfilename){
-        
-    }
+    public static void decode(Map<String, Character> codeMap, File inputFile) throws FileNotFoundException{
+        Scanner in = new Scanner(inputFile);
+        String fileString = "";
 
-   
+        while (in.hasNext()) {
+			String inLine = in.nextLine();
+            fileString = fileString + inLine;
+            
+		}
+        in.close();
+
+        //int replacedCount = 0;
+        Set<String> keyCodes = codeMap.keySet();
+
+        PrintWriter outputFile = new PrintWriter(inputFile);
+
+        Integer keyCodeLength = 0;
+
+        for(int replacedCount=0; replacedCount<=fileString.length();){     
+
+            for (String keyCode : keyCodes) {
+                Integer substringIndex = fileString.indexOf(keyCode, replacedCount);
+                //System.out.println(substringIndex.toString());
+                //System.out.println(replacedCount.toString());
+                if(substringIndex.equals(replacedCount)){
+                    char decodedCharacter = codeMap.get(keyCode);
+                    outputFile.print(decodedCharacter);
+                    keyCodeLength = keyCode.length();
+                } 
+            } 
+            replacedCount = replacedCount + keyCodeLength;  
+        }
+        outputFile.close();
+    }
 }
